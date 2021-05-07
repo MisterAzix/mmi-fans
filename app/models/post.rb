@@ -4,4 +4,5 @@ class Post < ApplicationRecord
   
   has_one_attached :thumbnail
   validates_presence_of :content
+  validates :thumbnail, presence: true, blob: { content_type: :image }
 end
