@@ -1,0 +1,25 @@
+<% if false %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<div class="mx-auto" style="max-width: 48rem">
+
+    <h1 class="text-center">Hi I'm <%= @user.username %>!</h1>
+    <hr>
+    <nav class="d-flex justify-content-center align-items-center" style="gap: 4rem">
+        <span><i class="fas fa-border-all me-2"></i>PUBLICATIONS</span>
+        <span><i class="far fa-bookmark me-2"></i>ENREGISTREMENTS</span>
+    </nav>
+    <hr>
+
+    <div class="feed-container d-flex justify-content-between flex-wrap">
+        <% @posts.each do |post| %>
+            <a class="mb-3" style="flex: 32%; max-width: 32%;" href="<%= post_path(post) %>">
+                <div class="post-container">
+                    <%= image_tag post.thumbnail.url(:width=>512, :crop=>"fill"), class: 'img-fluid' %>
+                    <div class="post-hover"><i class="fas fa-heart me-2"></i> <%= post.likes.count %></div>
+                </div>
+            </a>
+        <% end %>
+    </div>
+</div>

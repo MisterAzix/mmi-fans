@@ -1,29 +1,55 @@
-<p id="notice"><%= notice %></p>
+<% if false %>
+  <p id="notice"><%= notice %></p>
+<% end %>
 
-<h1>Posts</h1>
+<h1 class="text-center">MMI FANS</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="d-flex flex-column align-items-center">
+    <%= link_to 'New Post', new_post_path, class: 'btn btn-primary my-3' %>
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.user_id %></td>
-        <td><%= post.content %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <div class="card mb-3" style="max-width: 32rem">
+            <div class="card-header">
+                <a href='/users/<%= post.user.username %>' class='badge bg-light text-dark'>
+                    <%= image_tag post.thumbnail.url(:width=>32, :height => 32, :crop=>"fill"), class: "rounded-circle me-2", style: 'width: 2rem' %>
+                    <span><%= post.user.username %></span>
+                </a>
+            </div>
+            <%= image_tag post.thumbnail.url, class: "card-img-top" %>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center" style="font-size: 1.5rem;">
+                    <div class="d-flex align-items-center" style="gap: 1rem;">
+                        <% existing_like = post.likes.find { |like| like.user_id == current_user.id } %>
+                        <% if existing_like %>
+                            <%= button_to post_like_path(post, existing_like), method: :delete, class: 'bg-transparent border-0 p-0' do %>
+                                <i class="fas fa-heart"></i>
+                            <% end %>
+                        <% else %>
+                            <%= button_to post_likes_path(post), method: :post, class: 'bg-transparent border-0 p-0' do %>
+                                <i class="far fa-heart"></i>
+                            <% end %>
+                        <% end %>
+                        <i class="far fa-comment"></i>
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <i class="far fa-bookmark"></i>
+                </div>
+                <div class="mt-2"><%= post.likes.count %> <%= (post.likes.count) <= 1 ? 'like' : 'likes'%></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"><%= post.user.username %></h5>
+                <p class="card-text"><%= post.content %></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="card-text m-0"><small class="text-muted"><%= time_ago_in_words(post.created_at).capitalize %></small></p>
+                    <% if post.user.is_admin? %>
+                        <div class="d-flex" style="gap: 1rem;">
+                            <%= link_to 'Show', post, class: 'btn btn-info' %>
+                            <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
+                            <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
-
-<%= link_to 'New Post', new_post_path %>
+</div>

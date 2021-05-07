@@ -1,6 +1,9 @@
-<h1>Editing Post</h1>
+<div class="row d-flex justify-content-center">
+    <div class="col-sm-6">
+        <h1 class="text-center">Editing Post</h1>
 
-<%= render 'form', post: @post %>
-
-<%= link_to 'Show', @post %> |
-<%= link_to 'Back', posts_path %>
+        <%= render 'form', post: @post %>
+        <%= link_to 'Show', @post, class: 'btn btn-success' %>
+        <%= link_to 'Back', posts_path, class: 'btn btn-info' %>
+    </div>
+</div>
