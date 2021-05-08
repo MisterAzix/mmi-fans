@@ -9,6 +9,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @can = @post.user == current_user
   end
 
   # GET /posts/new
