@@ -14,7 +14,11 @@
     <header>
       <div class="d-flex justify-content-between align-items-center container">
         <h2><%= link_to 'MMI FANS', :root %></h2>
-        <%= link_to 'SIGN OUT', destroy_user_session_path(), method: :delete, class: 'btn btn-danger' %>
+        <% if user_signed_in? %>
+          <%= link_to 'SIGN OUT', destroy_user_session_path(), method: :delete, class: 'btn btn-danger' %>
+        <% else %>
+          <%= link_to 'SIGN IN', new_user_session_path(), class: 'btn btn-success' %>
+        <% end %>
       </div>
     </header>
     <main class="container" style="padding-top: 4rem">
