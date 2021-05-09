@@ -6,9 +6,14 @@
         <%= f.error_notification %>
 
         <div class="form-inputs my-3">
+            <%= f.file_field :avatar,
+                        required: true,
+                        class: 'form-control',
+                        accept: 'image/png, image/jpg, image/jpeg' %>
             <%= f.input :username, 
                         required: true,
-                        autofocus: true, %>
+                        autofocus: true,
+                        input_html: { autocomplete: "username" } %>
             <%= f.input :email, 
                         required: true %>
             <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

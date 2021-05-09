@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :likes, dependent: :destroy
+  has_one_attached :avatar
 
   def is_admin?
     self.admin == true

@@ -4,7 +4,10 @@
 
 <div class="mx-auto" style="max-width: 48rem">
 
-    <h1 class="text-center">Hi I'm <%= @user.username %>!</h1>
+    <section class="d-flex justify-content-center align-items-center">
+        <%= image_tag @avatar, class: 'img-thumbnail rounded-circle me-4', style: 'width: 8rem; height: 8rem;' %>
+        <h1 class="text-center">Hi I'm <%= @user.username %>!</h1>
+    </section>
     <hr>
     <nav class="d-flex justify-content-center align-items-center" style="gap: 4rem">
         <span><i class="fas fa-border-all me-2"></i>PUBLICATIONS</span>

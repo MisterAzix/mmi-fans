@@ -6,6 +6,10 @@
         <%= f.error_notification %>
 
         <div class="form-inputs my-3">
+            <%= f.file_field :avatar,
+                        required: true,
+                        class: 'form-control',
+                        accept: 'image/png, image/jpg, image/jpeg' %>
             <%= f.input :username,
                         required: true,
                         autofocus: true,

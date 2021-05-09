@@ -10,7 +10,7 @@
         <div class="card mb-3" style="max-width: 32rem">
             <div class="card-header">
                 <a href='/users/<%= post.user.username %>' class='badge bg-light text-dark'>
-                    <% @img_rounded = post.thumbnail.url ? post.thumbnail.url(:width=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                    <% @img_rounded = post.user.avatar.attached? ? post.user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
                     <%= image_tag @img_rounded, class: "rounded-circle me-2", style: 'width: 2rem' %>
                     <span><%= post.user.username %></span>
                 </a>
