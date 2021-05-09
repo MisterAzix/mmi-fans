@@ -6,7 +6,12 @@
 
     <section class="d-flex justify-content-center align-items-center">
         <%= image_tag @avatar, class: 'img-thumbnail rounded-circle me-4', style: 'width: 8rem; height: 8rem;' %>
-        <h1 class="text-center">Hi I'm <%= @user.username %>!</h1>
+        <div class="d-flex align-items-center">
+            <h1 class="text-center me-4"><%= @user.username %></h1>
+            <%= link_to 'Edit profile', edit_user_registration_path(), 
+            class: 'btn btn-outline-dark btn-sm' if @can %>
+        </div>
+
     </section>
     <hr>
     <nav class="d-flex justify-content-center align-items-center" style="gap: 4rem">
