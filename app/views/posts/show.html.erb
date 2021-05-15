@@ -51,6 +51,12 @@
                     <% end %>
                 </div>
             </div>
+            <ul class="list-group list-group-flush">
+                <%= render @post.comments %>
+            </ul>
+            <div class="card-footer">
+                <%= render 'comments/form' %>
+            </div>
         </div>
     </div>
 </div>
