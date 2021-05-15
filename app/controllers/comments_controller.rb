@@ -1,6 +1,15 @@
 class CommentsController < ApplicationController
     before_action :find_post
 
+    def index
+        @@count = params[:count].to_i
+        render json: { html: render_to_string(partial: @post.comments.order('id DESC').limit(4 + @@count).drop(2 + @@count)) }
+        #render json: { html: params[:count] }
+    end
+
+    def show
+    end
+
     def create
         @comment = @post.comments.create(comment_params)
         @comment.user = current_user
