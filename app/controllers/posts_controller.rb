@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.all
+    @users = User.joins(:likes).group('users.id').order('likes.count DESC')
   end
 
   # GET /posts/1 or /posts/1.json

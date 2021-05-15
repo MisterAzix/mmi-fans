@@ -4,78 +4,105 @@
 
 <h1 class="text-center">MMI FANS</h1>
 
-<div class="d-flex flex-column align-items-center">
-    <%= link_to 'New Post', new_post_path, class: 'btn btn-primary my-3' %>
-    <% @posts.each do |post| %>
-        <div class="card mb-3" style="max-width: 32rem">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <a href='/users/<%= post.user.username %>' class='badge bg-light text-dark'>
-                    <% @img_rounded = post.user.avatar.attached? ? post.user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
-                    <%= image_tag @img_rounded, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
-                    <span><%= post.user.username %></span>
-                </a>
-                <small class="text-muted me-1"><%= time_ago_in_words(post.created_at).upcase %> AGO</small>
-            </div>
-            <% @img = post.thumbnail.url ? post.thumbnail.url(:width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
-            <%= image_tag @img, alt: 'Post image', class: "card-img-top" %>
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center" style="font-size: 1.5rem;">
-                    <div class="d-flex align-items-center" style="gap: 1rem;">
-                        <% existing_like = post.likes.find { |like| like.user == current_user } %>
-                        <% if existing_like %>
-                            <%= button_to post_like_path(post, existing_like), title: 'Unlike', method: :delete, class: 'bg-transparent border-0 p-0' do %>
-                                <i class="fas fa-heart"></i>
+<div class="d-flex justify-content-center row">
+    <div class="col-sm-6 d-flex flex-column align-items-center">
+        <% @posts.each do |post| %>
+            <div class="card mb-5" style="max-width: 32rem">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a href='/users/<%= post.user.username %>' class='badge bg-light text-dark'>
+                        <% @img_rounded = post.user.avatar.attached? ? post.user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                        <%= image_tag @img_rounded, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
+                        <span><%= post.user.username %></span>
+                    </a>
+                    <small class="text-muted me-1"><%= time_ago_in_words(post.created_at).upcase %> AGO</small>
+                </div>
+                <% @img = post.thumbnail.url ? post.thumbnail.url(:width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
+                <%= image_tag @img, alt: 'Post image', class: "card-img-top" %>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center" style="font-size: 1.5rem;">
+                        <div class="d-flex align-items-center" style="gap: 1rem;">
+                            <% existing_like = post.likes.find { |like| like.user == current_user } %>
+                            <% if existing_like %>
+                                <%= button_to post_like_path(post, existing_like), title: 'Unlike', method: :delete, class: 'bg-transparent border-0 p-0' do %>
+                                    <i class="fas fa-heart"></i>
+                                <% end %>
+                            <% else %>
+                                <%= button_to post_likes_path(post), title: 'Like', method: :post, class: 'bg-transparent border-0 p-0' do %>
+                                    <i class="far fa-heart"></i>
+                                <% end %>
                             <% end %>
-                        <% else %>
-                            <%= button_to post_likes_path(post), title: 'Like', method: :post, class: 'bg-transparent border-0 p-0' do %>
-                                <i class="far fa-heart"></i>
-                            <% end %>
-                        <% end %>
-                        <i class="far fa-comment"></i>
-                        <i class="far fa-paper-plane"></i>
+                            <i class="far fa-comment"></i>
+                            <i class="far fa-paper-plane"></i>
+                        </div>
+                        <i class="far fa-bookmark"></i>
                     </div>
-                    <i class="far fa-bookmark"></i>
+                    <div class="mt-2">
+                        <span class="me-3"><%= post.likes.count %> <%= (post.likes.count) <= 1 ? 'like' : 'likes'%></span>
+                        <span><%= post.comments.count %> <%= (post.comments.count) <= 1 ? 'comment' : 'comments'%></span>
+                    </div>
                 </div>
-                <div class="mt-2">
-                    <span class="me-3"><%= post.likes.count %> <%= (post.likes.count) <= 1 ? 'like' : 'likes'%></span>
-                    <span><%= post.comments.count %> <%= (post.comments.count) <= 1 ? 'comment' : 'comments'%></span>
+                <div class="card-body">
+                    <h5 class="card-title"><%= post.user.username %></h5>
+                    <p class="card-text"><%= post.content %></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <% if current_user && current_user.is_admin? %>
+                            <div class="d-flex" style="gap: 1rem;">
+                                <%= link_to 'Show', post, class: 'btn btn-info' %>
+                                <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
+                                <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                            </div>
+                        <% end %>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"><%= post.user.username %></h5>
-                <p class="card-text"><%= post.content %></p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <% if current_user && current_user.is_admin? %>
-                        <div class="d-flex" style="gap: 1rem;">
-                            <%= link_to 'Show', post, class: 'btn btn-info' %>
-                            <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
-                            <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                <ul id="comment-<%= post.id %>" class="list-group list-group-flush">
+                    <% post.comments.order('id DESC').limit(2).each do |comment| %>
+                        <%= render comment %>
+                    <% end %>
+                    <div class="d-flex justify-content-center p-2">
+                        <%= button_to post_comments_path(post), title: 'More', method: :get, id: 'more-btn-' + post.id.to_s, class: 'more-com-btn bg-transparent border-0' do %>
+                            <i class="far fa-plus-square fs-3"></i>
+                        <% end %>
+                    </div>
+                </ul>
+                <div class="card-footer">
+                    <%= simple_form_for([post, post.comments.build]) do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+                        <div class="input-group col-sm-10">
+                            <%= f.text_field :content, placeholder: 'New comment...', required: true, class: 'form-control' %>
+                            <%= f.submit 'Send', class: 'btn btn-outline-dark' %> 
                         </div>
                     <% end %>
                 </div>
             </div>
-            <ul id="comment-<%= post.id %>" class="list-group list-group-flush">
-                <% post.comments.order('id DESC').limit(2).each do |comment| %>
-                    <%= render comment %>
-                <% end %>
-                <div class="d-flex justify-content-center p-2">
-                    <%= button_to post_comments_path(post), title: 'More', method: :get, id: 'more-btn-' + post.id.to_s, class: 'more-com-btn bg-transparent border-0' do %>
-                        <i class="far fa-plus-square fs-3"></i>
-                    <% end %>
-                </div>
-            </ul>
-            <div class="card-footer">
-                <%= simple_form_for([post, post.comments.build]) do |f| %>
-                    <%= f.error_notification %>
-                    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+        <% end %>
+    </div>
 
-                    <div class="input-group col-sm-10">
-                        <%= f.text_field :content, placeholder: 'New comment...', required: true, class: 'form-control' %>
-                        <%= f.submit 'Send', class: 'btn btn-outline-dark' %> 
-                    </div>
+    <div class="col-sm-3">
+        <% if current_user %>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center">
+                    <% @img_profile = current_user.avatar.attached? ? current_user.avatar.url(:width=>64, :height=>64, :crop=>"fill") : 'https://via.placeholder.com/64' %>
+                    <%= image_tag @img_profile, alt: 'Profile picture', class: "rounded-circle me-3", style: 'width: 4rem' %>
+                    <strong>Welcome <%= current_user.username %>!</strong>
+                </div>
+            </div>
+        <% end %>
+        <div class="card">
+             <div class="list-group list-group-flush">
+                <% @users.each do |user| %>
+                    <a class="list-group-item list-group-item-action" href='/users/<%= user.username %>'>
+                        <% @img_top = user.avatar.attached? ? user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                        <%= image_tag @img_top, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
+                        <%= user.username %> : <%= user.likes.count %> <%= user.likes.count <= 1 ? 'like' : 'likes' %>
+                    </a>
                 <% end %>
             </div>
         </div>
-    <% end %>
-
+        <div class="d-flex flex-column align-items-center">
+            <%= link_to 'New Post', new_post_path, class: 'btn btn-primary my-4' %>
+            <small>© 2021 Maxence Breuilles</small>
+        </div>
+    </div>
 </div>
