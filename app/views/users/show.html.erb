@@ -29,7 +29,7 @@
         <% @posts.each do |post| %>
             <a class="mb-3" style="flex: 32%; max-width: 32%;" href="<%= post_path(post) %>">
                 <div class="post-container">
-                    <% @img = post.thumbnail.url ? post.thumbnail.url(:width=>512, :crop=>"fill") : 'https://via.placeholder.com/512' %>
+                    <% @img = post.thumbnail.url ? post.thumbnail.url(:width=>512, :height=>512, :crop=>"fill") : 'https://via.placeholder.com/512' %>
                     <%= image_tag @img, class: 'img-fluid' %>
                     <div class="post-hover"><i class="fas fa-heart me-2"></i> <%= post.likes.count %></div>
                 </div>
