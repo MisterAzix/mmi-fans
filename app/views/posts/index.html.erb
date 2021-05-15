@@ -91,11 +91,11 @@
         <% end %>
         <div class="card">
              <div class="list-group list-group-flush">
-                <% @users.each do |user| %>
-                    <a class="list-group-item list-group-item-action" href='/users/<%= user.username %>'>
-                        <% @img_top = user.avatar.attached? ? user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                <% @top.sort_by { |t| - t[:counter] }.each do |top| %>
+                    <a class="list-group-item list-group-item-action" href='/users/<%= top[:user].username %>'>
+                        <% @img_top = top[:user].avatar.attached? ? top[:user].avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
                         <%= image_tag @img_top, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
-                        <%= user.username %> : <%= user.likes.count %> <%= user.likes.count <= 1 ? 'like' : 'likes' %>
+                        <%= top[:user].username %> : <%= top[:counter] %> <%= top[:counter] <= 1 ? 'like' : 'likes' %>
                     </a>
                 <% end %>
             </div>
