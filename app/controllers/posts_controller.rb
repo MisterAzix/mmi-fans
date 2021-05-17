@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.order('id DESC')
     @top = []
     User.all.each do |user|
       @top << {
