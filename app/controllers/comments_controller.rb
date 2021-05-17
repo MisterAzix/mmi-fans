@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
     before_action :find_post
+    skip_before_action :authenticate_user!, only: :index
 
     def index
         @@count = params[:count].to_i
