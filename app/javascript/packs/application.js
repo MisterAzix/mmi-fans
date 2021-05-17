@@ -25,6 +25,7 @@ window.addEventListener('load', () => {
                 type: "get",
                 data: new URLSearchParams({ count: count }).toString(),
                 success: function(data) {
+                    if (data.html.length <= 1) return btn.parentElement.parentElement.remove()
                     document.getElementById('comment-' + postID).insertAdjacentHTML('beforeend', data.html)
                     document.getElementById('comment-' + postID).appendChild(btn.parentElement.parentElement)
                     count+=2

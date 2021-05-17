@@ -58,11 +58,11 @@
                     <% post.comments.order('id DESC').limit(2).each do |comment| %>
                         <%= render comment %>
                     <% end %>
-                    <div class="d-flex justify-content-center p-2">
+                    <li class="d-flex justify-content-center p-2">
                         <%= button_to post_comments_path(post), title: 'More', method: :get, id: 'more-btn-' + post.id.to_s, class: 'more-com-btn bg-transparent border-0' do %>
                             <i class="far fa-plus-square fs-3"></i>
                         <% end %>
-                    </div>
+                    </li>
                 </ul>
                 <div class="card-footer">
                     <%= simple_form_for([post, post.comments.build]) do |f| %>
