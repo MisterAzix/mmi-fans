@@ -1,7 +1,11 @@
-<% if false %>
-  <p id="notice"><%= notice %></p>
+<% # Meta information for the <head> section %>
+<% title 'Publication' %>
+<% meta_tag :description, @post.content %>
+<% if @post.thumbnail.attached? %>
+    <% meta_tag :image, @post.thumbnail.url(:width=>1200, :height=>628, :crop=>"fill") %>
 <% end %>
 
+<% # View content %>
 <h1 class="text-center">Post</h1>
 <hr>
 
