@@ -10,13 +10,13 @@
             <div class="card mb-5" style="max-width: 32rem">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <a href='/users/<%= post.user.username %>' class='badge bg-light text-dark'>
-                        <% @img_rounded = post.user.avatar.attached? ? post.user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                        <% @img_rounded = post.user.avatar.attached? ? post.user.avatar.url(:secure=>true, :width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
                         <%= image_tag @img_rounded, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
                         <span><%= post.user.username %></span>
                     </a>
                     <small class="text-muted me-1"><%= time_ago_in_words(post.created_at).upcase %> AGO</small>
                 </div>
-                <% @img = post.thumbnail.url ? post.thumbnail.url(:width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
+                <% @img = post.thumbnail.url ? post.thumbnail.url(:secure=>true, :width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
                 <%= image_tag @img, alt: 'Post image', class: "card-img-top" %>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center" style="font-size: 1.5rem;">
@@ -83,7 +83,7 @@
         <% if current_user %>
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <% @img_profile = current_user.avatar.attached? ? current_user.avatar.url(:width=>64, :height=>64, :crop=>"fill") : 'https://via.placeholder.com/64' %>
+                    <% @img_profile = current_user.avatar.attached? ? current_user.avatar.url(:secure=>true, :width=>64, :height=>64, :crop=>"fill") : 'https://via.placeholder.com/64' %>
                     <%= image_tag @img_profile, alt: 'Profile picture', class: "rounded-circle me-3", style: 'width: 4rem' %>
                     <strong>Welcome <%= current_user.username %>!</strong>
                 </div>
@@ -93,7 +93,7 @@
              <div class="list-group list-group-flush">
                 <% @top.sort_by { |t| - t[:counter] }.each do |top| %>
                     <a class="list-group-item list-group-item-action" href='/users/<%= top[:user].username %>'>
-                        <% @img_top = top[:user].avatar.attached? ? top[:user].avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                        <% @img_top = top[:user].avatar.attached? ? top[:user].avatar.url(:secure=>true, :width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
                         <%= image_tag @img_top, alt: 'Author profile picture', class: "rounded-circle me-2", style: 'width: 2rem' %>
                         <%= top[:user].username %> : <%= top[:counter] %> <%= top[:counter] <= 1 ? 'like' : 'likes' %>
                     </a>

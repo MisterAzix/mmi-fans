@@ -2,7 +2,7 @@
 <% title 'Publication' %>
 <% meta_tag :description, @post.content %>
 <% if @post.thumbnail.attached? %>
-    <% meta_tag :image, @post.thumbnail.url(:width=>1200, :height=>628, :crop=>"fill") %>
+    <% meta_tag :image, @post.thumbnail.url(:secure=>true, :width=>1200, :height=>628, :crop=>"fill") %>
 <% end %>
 
 <% # View content %>
@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="card mb-3" style="max-width: 32rem">
-            <% @img = @post.thumbnail.url ? @post.thumbnail.url(:width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
+            <% @img = @post.thumbnail.url ? @post.thumbnail.url(:secure=>true, :width=>1080, :crop=>"fill") : 'https://via.placeholder.com/1080' %>
             <%= image_tag @img, class: "card-img-top" %>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-header">
                 <a href='/users/<%= @post.user.username %>' class='badge bg-light text-dark'>
-                    <% @img_rounded = @post.user.avatar.attached? ? @post.user.avatar.url(:width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
+                    <% @img_rounded = @post.user.avatar.attached? ? @post.user.avatar.url(:secure=>true, :width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
                     <%= image_tag @img_rounded, class: "rounded-circle me-2", style: 'width: 2rem' %>
                     <span><%= @post.user.username %></span>
                 </a>
