@@ -28,7 +28,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center" style="font-size: 1.5rem;">
                     <div class="d-flex align-items-center" style="gap: 1rem;">
-                        <% existing_like = @post.likes.find { |like| like.user_id == current_user.id } %>
+                        <% existing_like = @post.likes.find { |like| like.user == current_user } %>
                         <% if existing_like %>
                             <%= button_to post_like_path(@post, existing_like), method: :delete, class: 'bg-transparent border-0 p-0' do %>
                                 <i class="fas fa-heart"></i>
