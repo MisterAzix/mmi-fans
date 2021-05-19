@@ -1,5 +1,8 @@
 <% # Meta information for the <head> section %>
 <% title @user.username %>
+<% if @user.avatar.attached? %>
+    <% meta_tag :image, @user.avatar.url(:secure=>true, :width=>1200, :height=>628, :crop=>"fill") %>
+<% end %>
 
 <% # View content %>
 <div class="mx-auto" style="max-width: 48rem">
