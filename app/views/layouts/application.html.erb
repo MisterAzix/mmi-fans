@@ -30,17 +30,22 @@
 
   <body>
     <header>
-      <div class="d-flex justify-content-between align-items-center container">
+      <div class="d-flex justify-content-between align-items-center container" style="font-size: 1.5rem;">
         <h2>
         <%= link_to :root, title: 'Home' do %>
           <%= image_tag 'https://res.cloudinary.com/hf10ee93o/image/upload/v1621260177/OnlyMMI_d6ymec.png', alt: 'Home button image', class: 'img-fluid', style: 'max-width: 10%;' %>
         <% end %>
         </h2>
-        <% if user_signed_in? %>
-          <%= link_to 'SIGN OUT', destroy_user_session_path(), method: :delete, class: 'btn btn-danger' %>
-        <% else %>
-          <%= link_to 'SIGN IN', new_user_session_path(), class: 'btn btn-success' %>
-        <% end %>
+        <div class="d-flex gap-4">
+          <% if user_signed_in? %>
+            <%= button_to destroy_user_session_path(), title: 'Logout', method: :delete, class: 'bg-transparent border-0 p-0' do %>
+                <i class="fas fa-sign-out-alt"></i>
+            <% end %>
+          <% else %>
+            <%= link_to 'Sign up', new_user_registration_path(), class: 'btn btn-success' %>
+            <%= link_to 'Sign in', new_user_session_path(), class: 'btn btn-outline-success' %>
+          <% end %>
+        </div>
       </div>
     </header>
     <main class="container" style="padding-top: 4rem">
