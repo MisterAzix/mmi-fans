@@ -40,7 +40,8 @@
           <% if user_signed_in? %>
             <% #@img_profile = current_user.avatar.attached? ? current_user.avatar.url(:secure=>true, :width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
             <% #image_tag @img_profile, alt: 'Profile picture', class: "rounded-circle me-3", style: 'width: 2rem' %>
-            <%= button_tag 'button', title: 'Notification', id: 'notif-button', class: 'bg-transparent border-0 p-0' do %>
+            <script>function toggleNotifModal() { document.getElementById('notif-modal').classList.toggle('d-none') }</script>
+            <%= button_tag 'button', title: 'Notification', :onclick => 'toggleNotifModal()', class: 'bg-transparent border-0 p-0' do %>
               <i class="far fa-heart"></i>
             <% end %>
             <%= button_to destroy_user_session_path(), title: 'Logout', method: :delete, class: 'bg-transparent border-0 p-0' do %>
@@ -69,18 +70,25 @@
               <% @thumbnail_notif = notif.post.thumbnail.attached? ? notif.post.thumbnail.url(:secure=>true, :width=>32, :height=>32, :crop=>"fill") : 'https://via.placeholder.com/32' %>
               <div class="d-flex justify-content-between align-items-center my-3">
                 <div class="d-flex align-items-center">
-                  <%= image_tag @img_notif, alt: 'Notif Profile picture', class: "rounded-circle", style: 'width: 2rem;' %>
+                  <a href='/users/<%= notif.user.username %>'>
+                    <%= image_tag @img_notif, alt: 'Notif Profile picture', class: "rounded-circle", style: 'width: 2rem;' %>
+                  </a>
                   <div class="mx-3">
-                    <span><strong><%= notif.user.username %></strong> 
+                    <span>
+                    <a href='/users/<%= notif.user.username %>' style="color: inherit; text-decoration: none;">
+                      <strong><%= notif.user.username %></strong> 
+                    </a>
                     <% if notif.class.name.downcase === 'like' %>
                     like your post 
                     <% elsif notif.class.name.downcase === 'comment' %>
                     comment your post
                     <% end %>
-                    <br><small class="text-muted"><%= time_ago_in_words(notif.created_at).upcase %> AGO</small><span>
+                    <br><small class="text-muted"><%= time_ago_in_words(notif.created_at).upcase %> AGO</small></span>
                   </div>
                 </div>
-                <%= image_tag @thumbnail_notif, alt: 'Notif Post Thumbnail', class: "border", style: 'width: 2rem' %>
+                <a href="<%= post_path(notif.post) %>">
+                  <%= image_tag @thumbnail_notif, alt: 'Notif Post Thumbnail', class: "border", style: 'width: 2rem' %>
+                </a>
               </div>
             <% end %>
           <% end %>

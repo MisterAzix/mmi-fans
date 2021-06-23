@@ -14,7 +14,7 @@ ActiveStorage.start()
 
 window.addEventListener('load', () => {
     const buttons = document.querySelectorAll('.more-com-btn')
-    
+
     buttons.forEach(btn => {
         let count = 0
         btn.addEventListener('click', e => {
@@ -24,20 +24,14 @@ window.addEventListener('load', () => {
                 url: btn.parentNode.action,
                 type: "get",
                 data: new URLSearchParams({ count: count }).toString(),
-                success: function(data) {
+                success: function (data) {
                     if (data.html.length <= 1) return btn.parentElement.parentElement.remove()
                     document.getElementById('comment-' + postID).insertAdjacentHTML('beforeend', data.html)
                     document.getElementById('comment-' + postID).appendChild(btn.parentElement.parentElement)
-                    count+=2
+                    count += 2
                 }
             })
         })
     })
 
-    const notifButton = document.getElementById('notif-button')
-
-    notifButton?.addEventListener('click', e => {
-        e.preventDefault()
-        document.getElementById('notif-modal').classList.toggle('d-none')
-    })
 })
