@@ -33,4 +33,11 @@ window.addEventListener('load', () => {
             })
         })
     })
+
+    const notifButton = document.getElementById('notif-button')
+
+    notifButton?.addEventListener('click', e => {
+        e.preventDefault()
+        document.getElementById('notif-modal').classList.toggle('d-none')
+    })
 })
