@@ -61,7 +61,7 @@
 
           <% if current_user %>
             <% @likesNotif = Like.where(post: [current_user.posts]).where.not(user: current_user) %>
-            <% @commentsNotif = Comment.where(post: [current_user.posts]) %>
+            <% @commentsNotif = Comment.where(post: [current_user.posts]).where.not(user: current_user) %>
 
             <% @totalNotif = @likesNotif + @commentsNotif %>
 
